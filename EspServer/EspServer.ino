@@ -7,7 +7,7 @@
 #include <ESP8266WiFi.h>
 
 // Replace with your network credentials
-const char* ssid     = "Natasha175";
+const char* ssid     = "SSID";
 const char* password = "89313535212";
 
 // Set web server port number to 80
@@ -40,15 +40,18 @@ void setup() {
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
+   
     Serial.print("Connecting to >>> ");
-    Serial.println(ssid);
+    Serial.print(ssid);
+    Serial.print(" : ");
+     Serial.println(WiFi.status());
   }
   // Print local IP address and start web server
   Serial.println("");
   Serial.println("WiFi connected.");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-  server.begin();
+  server.begin(); 
 }
 
 void loop(){
