@@ -5,6 +5,9 @@
 
 // Load Wi-Fi library
 #include <ESP8266WiFi.h>
+#include <WebSocketsServer.h>
+
+WebSocketsServer webSocket = WebSocketsServer(81);
 
 // Replace with your network credentials
 const char* ssid     = "SSID";
@@ -23,6 +26,9 @@ String output4State = "off";
 // Assign output variables to GPIO pins
 const int output5 = 0;
 const int output4 = 2;
+
+const char* flashLightOn = "flashLight-on";
+const char* flashLightOff = "flashLight-off";
 
 void setup() {
   Serial.begin(115200);
@@ -52,9 +58,15 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
   server.begin(); 
+
+  webSocket.begin();
+  webSocket.onEvent(webSocketEvent);
 }
 
-void loop(){
+void loop() {
+
+  webSocket.loop();
+
   WiFiClient client = server.available();   // Listen for incoming clients
 
   if (client) {                             // If a new client connects,
@@ -147,4 +159,63 @@ void loop(){
     Serial.println("Client disconnected.");
     Serial.println("");
   }
+}
+
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
+
+    switch(type) {
+        case WStype_DISCONNECTED:
+            // USE_SERIAL.printf("[%u] Disconnected!\n", num);
+            Serial.println("Disconnected!");
+            break;
+        case WStype_CONNECTED:
+            {
+
+              IPAddress ip = webSocket.remoteIP(num);
+              // USE_SERIAL.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+              Serial.println("Connected");
+      
+              Serial.println(digitalRead(output4));
+              
+              // send message to client
+              webSocket.sendTXT(num, "Connected");
+            
+              if(digitalRead(output4) == 1) {
+                webSocket.sendTXT(num, flashLightOn);
+              }
+              else {
+                webSocket.sendTXT(num, flashLightOff);
+              }
+            }
+            break;
+        case WStype_TEXT:
+
+            Serial.println((char*)payload);
+
+            if(String((char*)payload) == String(flashLightOn)) {
+              digitalWrite(output4, HIGH);
+              webSocket.broadcastTXT(flashLightOn);              
+            }
+            else if(String((char*)payload) == String(flashLightOff)) {
+              digitalWrite(output4, LOW);
+              webSocket.broadcastTXT(flashLightOff);              
+            }
+                    
+            Serial.println("From client");
+            // send message to client
+            // webSocket.sendTXT(num, "message here");
+
+            // send data to all connected clients
+            // webSocket.broadcastTXT("fla");
+            break;
+        case WStype_BIN:
+            Serial.println("get binary length");
+
+            // USE_SERIAL.printf("[%u] get binary length: %u\n", num, length);
+            // hexdump(payload, length);
+
+            // send message to client
+            // webSocket.sendBIN(num, payload, length);
+            break;
+    }
 }

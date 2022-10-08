@@ -23,7 +23,6 @@
 </script>
 
 <template>
-    {{ count }}
     <div class="cubes">
         <Cube v-for="(color, colorIndex) in colors" @click="active(color)" :active="color === activeColor" :background="color" :key="colorIndex" />
     </div>

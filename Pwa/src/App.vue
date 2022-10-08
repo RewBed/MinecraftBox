@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 import Cubes from './components/Cubes/Cubes.vue'
+import Flashlight from './components/Flashlight/Flashlight.vue';
+
 </script>
 
 <template>
@@ -8,7 +10,10 @@ import Cubes from './components/Cubes/Cubes.vue'
       <div class="header">
           <div class="header_logo">MinecraftBox</div>
       </div>
-      <Cubes />
+      <div>
+          <!--      <Cubes />-->
+          <Flashlight />
+      </div>
   </div>
 </template>
 
