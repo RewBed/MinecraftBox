@@ -16,29 +16,37 @@ export default defineComponent({
     name: "Flashlight",
     data() {
         return {
-            active: false
+            active: false,
+            isToggle: false,
+            buttonPressAudio: new Audio('https://minecraft-box.zip-ec.ru/audio/Stone_button_press.ogg'),
+            buttonUnpressAudio: new Audio('https://minecraft-box.zip-ec.ru/audio/Stone_button_unpress.ogg')
         }
     },
     methods: {
         toggleItem(): void {
-            this.active = !this.active;
-            if (this.active)
-                Socket.socket.send(flashLightOn);
-            else
-                Socket.socket.send(flashLightOff);
+            if(this.isToggle) {
+                this.isToggle = false;
+                if(this.active)
+                    Socket.socket.send(flashLightOff);
+                else
+                    Socket.socket.send(flashLightOn);
+            }
         }
     },
     mounted() {
-
         Socket.init();
         Socket.socket.onmessage = (event) => {
+            console.log(event.data);
             if (event.data === flashLightOn) {
                 this.active = true;
+                this.isToggle = true;
+                this.buttonPressAudio.play();
             }
             else if (event.data === flashLightOff) {
                 this.active = false;
+                this.isToggle = true;
+                this.buttonUnpressAudio.play()
             }
-
         }
     }
 })

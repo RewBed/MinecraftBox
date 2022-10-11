@@ -6,9 +6,13 @@ export default class Socket {
 
         this.socket.onopen = (e) => {
             console.log("onopen");
+            setInterval(() => {
+                this.socket.send('___ping___');
+            }, 100000);
         };
 
         this.socket.onclose = (event) => {
+            console.log("onclose");
             console.log(event);
         };
 
