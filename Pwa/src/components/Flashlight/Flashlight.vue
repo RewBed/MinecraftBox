@@ -34,7 +34,6 @@ export default defineComponent({
         }
     },
     mounted() {
-        Socket.init();
         Socket.socket.onmessage = (event) => {
             console.log(event.data);
             if (event.data === flashLightOn) {

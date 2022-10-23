@@ -1,5 +1,9 @@
 import { createApp } from 'vue'
 import './style.css'
-import App from './App.vue'
+import App from "./App.vue";
+import Router from "./Router";
+import Socket from "./modules/Socket";
 
-createApp(App).mount('#app')
+Socket.init();
+
+createApp(App).use(Router).mount('#app')
