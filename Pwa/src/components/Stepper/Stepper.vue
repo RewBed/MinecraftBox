@@ -7,7 +7,6 @@
 
 <script lang="ts">
 
-import Socket from "../../modules/Socket";
 import {defineComponent} from "vue";
 
 export default defineComponent( {
@@ -21,18 +20,18 @@ export default defineComponent( {
     leftPressed: function (): void {
       this.moveInterval = setInterval(() => {
         console.log('pressed');
-        Socket.socket.send('left');
+        this.$socket.socket.send('left');
       }, 100);
     },
     rightPressed() : void {
       this.moveInterval = setInterval(() => {
         console.log('pressed');
-        Socket.socket.send('right');
+        this.$socket.socket.send('right');
       }, 100);
     },
     leave() : void {
       clearInterval(this.moveInterval);
-      Socket.socket.send('stop');
+      this.$socket.socket.send('stop');
     }
   }
 })

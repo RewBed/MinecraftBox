@@ -7,7 +7,6 @@
 <script lang="ts">
 
 import {defineComponent} from "vue";
-import Socket from "../../modules/Socket";
 
 const flashLightOn = "flashLight-on";
 const flashLightOff = "flashLight-off";
@@ -27,14 +26,14 @@ export default defineComponent({
             if(this.isToggle) {
                 this.isToggle = false;
                 if(this.active)
-                    Socket.socket.send(flashLightOff);
+                  this.$socket.socket.send(flashLightOff);
                 else
-                    Socket.socket.send(flashLightOn);
+                  this.$socket.socket.send(flashLightOn);
             }
         }
     },
     mounted() {
-        Socket.socket.onmessage = (event) => {
+        this.$socket.socket.onmessage = (event: MessageEvent) => {
             console.log(event.data);
             if (event.data === flashLightOn) {
                 this.active = true;

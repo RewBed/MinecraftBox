@@ -67,16 +67,6 @@ void setup() {
 }
 
 void loop() {
-  // check current stepper motor position to invert direction
-  /*
-  if (stepper.distanceToGo() == 0){
-    stepper.moveTo(-stepper.currentPosition());
-    Serial.println("Changing direction");
-  }
-  // move the stepper motor (one step at a time)
-  stepper.run();
-  */
-  
   if(stepperIsMove) {
     stepper.runSpeed();
   }
@@ -87,6 +77,7 @@ void loop() {
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
 
     switch(type) {
+
         case WStype_DISCONNECTED:
             Serial.println("Disconnected!");
             break;
@@ -132,6 +123,12 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
                     
             Serial.println("From client");
             break;
+        case WStype_PONG:
+            Serial.println("WStype_PONG");
+            break;    
+        case WStype_PING:
+            Serial.println(" WStype_PING");
+            break;          
     }
 }
 
