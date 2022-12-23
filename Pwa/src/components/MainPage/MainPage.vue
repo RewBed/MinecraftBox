@@ -27,7 +27,13 @@ export default defineComponent({
     }
   },
   mounted() {
+    this.$socket.event.addEventListener('open', () => {
+      this.isConnection = true;
+    });
 
+    this.$socket.event.addEventListener('close', () => {
+      this.isConnection = false;
+    });
   },
   methods: {
     start() {
