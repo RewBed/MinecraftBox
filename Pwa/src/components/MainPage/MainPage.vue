@@ -7,10 +7,10 @@
       </div>
     </div>
     <div>
-<!--      <router-view></router-view>-->
+      <!-- <router-view></router-view> -->
     </div>
-    <button style="position: absolute; bottom: 10px; right: 10px" @click="$router.push('/stepper')">stepper</button>
-    <button style="position: absolute; bottom: 10px; left: 10px" @click="$router.push('/')">Flashlight</button>
+<!--    <button style="position: absolute; bottom: 10px; right: 10px" @click="$router.push('/stepper')">stepper</button>
+    <button style="position: absolute; bottom: 10px; left: 10px" @click="$router.push('/')">Flashlight</button>-->
   </div>
 </template>
 
@@ -58,7 +58,7 @@ export default defineComponent({
     &_logo {
       font-size: 20px;
       margin-bottom: 10px;
-      font-family: "Arial Black";
+      font-family: "Arial Black", serif;
       color: #fff;
     }
   }

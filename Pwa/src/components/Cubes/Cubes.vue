@@ -4,6 +4,7 @@
 
     export default defineComponent({
         name: 'App',
+        inject: ['$socket'],
         components: {
             Cube
         },
@@ -17,6 +18,7 @@
             active(color: string) : void {
                 this.activeColor = color;
                 console.log(this.activeColor);
+                this.$socket.socket.send('me');
             }
         }
     });
@@ -24,7 +26,7 @@
 
 <template>
     <div class="cubes">
-        <Cube v-for="(color, colorIndex) in colors" @click="active(color)" :active="color === activeColor" :background="color" :key="colorIndex" />
+        <Cube v-for="(color, colorIndex) in colors" @click="active(color)" :active="color == activeColor" :background="color" :key="colorIndex" />
     </div>
 </template>
 

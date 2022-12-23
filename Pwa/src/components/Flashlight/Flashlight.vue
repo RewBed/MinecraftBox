@@ -13,6 +13,7 @@ const flashLightOff = "flashLight-off";
 
 export default defineComponent({
     name: "Flashlight",
+    inject: ['$socket'],
     data() {
         return {
             active: false,
