@@ -18,6 +18,8 @@
 
 import {defineComponent} from "vue";
 
+import {DefineStore} from "../../store/DefineStore";
+
 export default defineComponent({
   name: "MainPage",
   inject: ['$socket'],
@@ -27,6 +29,9 @@ export default defineComponent({
     }
   },
   mounted() {
+
+  },
+  computed: {
 
   },
   methods: {
