@@ -14,7 +14,7 @@ createApp(App)
     // .use(pinia)
     .use(Router)
     // .use(Socket, "ws://94.19.77.238:8081")
-    .use(Socket, "ws://192.168.0.109:8081")
+    .use(Socket, "ws://192.168.0.114:81")
     .mount('#app');
 
 declare module "@vue/runtime-core" {
