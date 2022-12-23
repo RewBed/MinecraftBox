@@ -3,7 +3,6 @@ export default class SocketApi {
     private pingTimer: number = 0;
 
     private pingInterval: number = 2000;
-    private pingCode: string = '__ping__';
 
     public event: HTMLDivElement;
 
@@ -22,10 +21,16 @@ export default class SocketApi {
     private connect(url: string) : void {
 
         this.socket = new WebSocket(url);
+        this.socket.binaryType = "arraybuffer";
+        console.log(this.socket);
 
         this.socket.addEventListener('open', () => {
             this.event.dispatchEvent(new CustomEvent('open'));
-            this.pingTimer = setInterval(() => this.socket.send(this.pingCode), this.pingInterval);
+
+            let buffer = new ArrayBuffer(4);
+            let ping = new Uint32Array(buffer);
+            ping[0] = 1;
+            this.pingTimer = setInterval(() => this.socket.send(ping), this.pingInterval);
         });
 
         this.socket.addEventListener('close', () => {

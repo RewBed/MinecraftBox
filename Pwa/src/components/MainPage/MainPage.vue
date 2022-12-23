@@ -7,6 +7,7 @@
       </div>
     </div>
     <div>
+      <Cubes />
       <!-- <router-view></router-view> -->
     </div>
 <!--    <button style="position: absolute; bottom: 10px; right: 10px" @click="$router.push('/stepper')">stepper</button>
@@ -17,10 +18,12 @@
 <script lang="ts">
 
 import {defineComponent} from "vue";
+import Cubes from "../Cubes/Cubes.vue";
 
 export default defineComponent({
   name: "MainPage",
   inject: ['$socket'],
+  components: {Cubes},
   data() {
     return {
       isConnection: false
